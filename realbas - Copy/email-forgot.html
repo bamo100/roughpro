@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="scss/main.css">
+  <title>Forgot email | basket v2</title>
+</head>
+<body>
+  <div class="holder">
+    <div class="upper-navbar">
+      <div>
+        <img src="./asset/images/basket logo white.png" alt="">
+      </div>
+      <div>
+        <ul class="nav-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Download</a></li>
+          <li><a href="#">Continue</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="box">
+      <div>
+        <p>Enter the email address associated with your account <br> and we'll send you a pin to reset your password.</p>
+      </div>
+
+        <form class="account-form" id="pinForm">
+          <center><small><span id="error" style="color: red; text-align: center !important ;"></span></small>
+          </center>
+        <div class="input-wrapper">
+          <label>Username/Email</label>
+            <input type="email" id="pinmail" placeholder="Username/Email " required>
+            <img src="./asset/icons/man icon.svg" alt="">
+        </div>
+        <div class="button">
+          <button class="btn-continue" type="submit">Continue</button>
+       </div>
+      </form>
+      
+      <div class="terms-para">
+        <p>Don't have an account ? <a class="blue-link" href="./signup.html">Sign up</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+<script>
+  document.getElementById('pinForm').addEventListener('submit', addPost);
+  function addPost(e) {
+    e.preventDefault();
+
+    console.log('hi')
+
+    const pinMail = document.getElementById("pinmail").value;
+    // const maili = localStorage.getItem(pinMail);
+
+    fetch('https://back.flowbasket.com/apis/forgot_password.php', {
+      method : 'POST',
+      headers : {
+        'Accept' : 'application/json, text/plain, */*',
+        'Content-type' : 'application/json',
+      },
+      body:JSON.stringify({
+         email : pinMail
+      })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      console.log(data.message)
+      if(data.message === 'Account creation successful') {
+         window.location = '/login.html'
+         document.getElementById('signupForm').reset();
+      }
+      else{
+        document.getElementById('error').innerHTML = data.message;
+      }
+    })
+    .catch((err) => {
+      document.getElementById('error').innerHTML =  err;
+    })
+  }
+</script>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="scss/main.css">
+  <title>Sign Up | basket v2</title>
+</head>
+<body>
+  <div class="holder">
+    <div class="upper-navbar">
+      <div>
+        <img src="./asset/images/basket logo white.png" alt="">
+      </div>
+      <div>
+        <ul class="nav-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Download</a></li>
+          <li><a href="#">Continue</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="box">
+      <div>
+        <p>Join For Free</p>
+        <h2 class="section-header">Create New Account</h2>
+        <p>Already a member? <a class="blue-link" href="./signup.html">Sign Up</a></p>
+      </div>
+      <div class="social-links">
+        <div>
+          <img src="./asset/icons/instagram icon.svg" alt="">
+          <a href="#">Continue With instagram</a>
+        </div>
+        <div>
+          <img src="./asset/icons/google icon.svg" alt="">
+          <a href="#">Continue With Google</a>
+        </div>
+      </div>
+      
+      <form id="loginForm" class="account-form">
+       <center><small><span id="error" style="color: red; text-align: center !important ;"></span></small>
+       </center>
+        <div class="input-wrapper">
+          <label>Username/Email</label>
+            <input type="text" id="txtMail" placeholder="Username/Email" required class="input">
+            <img src="./asset/icons/man icon.svg" alt="">
+        </div>
+        <div class="input-wrapper">
+          <label>Password</label>
+            <input type="password" id="txtPass" placeholder="password" required class="input">
+            <img src="./asset/icons/man icon.svg" alt="">
+        </div>
+        <p class="forget-password"><a href="./email-forgot.html" class="blue-link">Forgot Password</a></p>
+        <div class="button">
+           <input class="btn-round" style="cursor: pointer;" type="submit" id="btnLogin" value="Login">
+           <button id="dash" class="btn-round" style="cursor: pointer;">Explore</button>
+        </div>
+      </form>
+      
+      <div>
+        <p>By clicking on login you agree to our <a href="#">Terms and Conditions</a></p>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', logPost);
+
+  function logPost(e) {
+    e.preventDefault();
+
+    const txtPass = document.getElementById("txtPass").value;
+    const txtMail = document.getElementById("txtMail").value;
+    const cook = sessionStorage.setItem('mail', txtMail);
+
+    fetch('https://back.flowbasket.com/apis/login.php', {
+      method : 'POST',
+      headers : {
+        'Accept' : 'application/json, text/plain, */*',
+        'Content-type' : 'application/json, multipart/form-data',
+      },
+      body:JSON.stringify({
+        email : txtMail,
+        password: txtPass,
+      })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      if(data.message === 'login successful') {
+         window.location = '/dashboard.html';
+         document.getElementById('loginForm').reset();
+      }
+      else{
+        document.getElementById('error').innerHTML = data.message;
+      }
+    })
+    .catch((err) => {
+      document.getElementById('error').innerHTML = err;
+    })
+  }
+</script>

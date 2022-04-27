@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="scss/main.css">
+  <title>Login | basket v2</title>
+</head>
+<body>
+  <div class="holder">
+    <div class="upper-navbar">
+      <div>
+        <img src="./asset/images/basket logo white.png" alt="">
+      </div>
+      <div>
+        <ul class="nav-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Download</a></li>
+          <li><a href="#">Continue</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="box">
+      <div>
+        <p>Join For Free</p>
+        <h2 class="section-header">Create New Account</h2>
+        <p>Already a member? <a class="blue-link" href="./login.html">Login</a></p>
+      </div>
+      <div class="social-links">
+        <div><img src="./asset/icons/instagram icon.svg" alt=""><a href="#">Continue With instagram</a></div>
+        <div>
+          <img src="./asset/icons/google icon.svg" alt=""><a href="#">Continue With Google</a>
+        </div>
+      </div>
+        <form class="account-form" id="signupForm">
+          <center><small><span id="error" style="color: red;"></span></small></center>
+          <div class="input-wrapper">
+            <label>Username</label>
+              <input type="text" placeholder="Username" id="signUser" required>
+              <img src="./asset/icons/man icon.svg" alt="">
+          </div>
+          <div class="input-wrapper">
+            <label>Email</label>
+              <input type="email" placeholder="Email" id="signMail" required>
+              <img src="./asset/icons/man icon.svg" alt="">
+          </div>
+          <div class="input-wrapper">
+            <label>Password</label>
+              <input type="password" placeholder="password" id="signPass" required>
+              <img src="./asset/icons/man icon.svg" alt="">
+          </div>
+          <div class="input-wrapper">
+            <label>Phone Number</label>
+              <input type="phone" placeholder="+234" id="signNum" required>
+              <img src="./asset/icons/man icon.svg" alt="">
+          </div>
+          <div class="input-wrapper">
+            <label>instagram</label>
+              <input type="text" placeholder="Instagram" id="signInsta" required>
+              <img src="./asset/icons/man icon.svg" alt="">
+          </div>
+        <!-- </div> -->
+            <div class="button">
+              <input class="btn-round" type="submit" id="btnSignup" value="SignUp">
+              <button id="dash" class="btn-round">Explore</button>
+            </div>
+          </form>
+      <div>
+        <p>By clicking on login you agree to our <a href="#">Terms and Conditions</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+<script>
+  document.getElementById('signupForm').addEventListener('submit', addPost);
+  function addPost(e) {
+    e.preventDefault();
+
+    console.log('hi')
+
+    const signUser = document.getElementById("signUser").value;
+    const signPass = document.getElementById("signPass").value;
+    const signMail = document.getElementById("signMail").value;
+    const signNum = document.getElementById("signNum").value;
+    const signInsta = document.getElementById("signInsta").value;
+    // const formData = new FormData(this);
+
+    fetch('https://back.flowbasket.com/apis/signup.php', {
+      method : 'POST',
+      headers : {
+        'Accept' : 'application/json, text/plain, */*',
+        'Content-type' : 'application/json',
+      },
+      body:JSON.stringify({
+        email : signMail,
+        password: signPass,
+        username: signUser,
+        phone_number: signNum,
+        instagram_id: signInsta
+      })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      console.log(data.message)
+      if(data.message === 'Account creation successful') {
+         window.location = '/login.html'
+         document.getElementById('signupForm').reset();
+      }
+      else{
+        document.getElementById('error').innerHTML = data.message;
+      }
+    })
+    .catch((err) => {
+      document.getElementById('error').innerHTML =  err;
+    })
+  }
+</script>

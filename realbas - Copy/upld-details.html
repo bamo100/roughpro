@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="scss/main.css">
+  <title>Upload details | basket v2</title>
+</head>
+<body>
+  <div class="overview">
+    <div class="side-bar">
+      <div class="logo">
+        <img src="./asset/images/basket logo white 1.png" alt="logo">
+      </div>
+      <div class="nav-bar">
+        <ul>
+          <li><img src="./asset/icons/nav-bar icon.svg" alt=""><a href="./dashboard.html"> Dashboard</a></li>
+          <li><img src="./asset/icons/nav-bar icon.svg" alt=""><a href="./explore.html">Explore</a></li>
+          <li><img src="./asset/icons/nav-bar icon.svg" alt=""><a href="./loops.html"> Loops</a></li>
+          <li><img src="./asset/icons/nav-bar icon.svg" alt=""><a href="./upload.html">Upload</a></li>
+          <li><img src="./asset/icons/nav-bar icon.svg" alt=""><a href="./terms.html">Terms & Agreement</a></li>
+          <li><img src="./asset/icons/nav-bar icon.svg" alt=""><a href="./help.html">Help</a></li>
+          <div class="line-break"></div>
+          <li><img src="./asset/icons/setting-icon.svg" alt=""><a class="dark-link" href="./setting.html">Setting</a></li>
+          <li><img src="./asset/icons/log-out icon.svg" alt=""><a class="dark-link" href="./logout.html">Logout</a></li>
+          <div class="line-break"></div>
+          <li><img src="./asset/images/Ellipse.png" alt=""><p class="dark">Adebayo Nifemi<br>Jozzay</p></li>
+          <div class="line-break"></div>
+          <li><p class="dark">Dark Mode</p>  <img src="./asset/icons/dark-mode icon.svg" alt=""></li>
+        </ul>
+      </div>
+    </div>
+    <div class="showcase">
+      <div class="search-bar">
+        <div class="search-input">
+         <input type="text" placeholder="Search Song,Producer,Mood,Genre,Tempo"> 
+        </div>
+        <div>
+         <button class="btn-main"><a href="#">Search</a></button>
+        </div>
+      </div>
+      <form class="container"  id="upload_form" enctype="multipart/form-data">
+        <center><small><span id="error" style="color: red; text-align: center !important ;"></span></small>
+        </center>
+        <h2 class="section-title">Upload</h2>
+        <div class="upload-form">
+          <div class="left-form">
+            <div>
+              <label for="best art">Best Art</label>
+              <div>
+                <input id="avatar" type="file" placeholder="Choose file to upload">
+                <button class="btn-main"><a>Upload</a></button>
+              </div>
+            </div>
+            <div>
+              <label for="About">About</label>
+              <textarea name="about" placeholder="Enter About details" id="" cols="30" rows="14"></textarea>
+            </div>
+            <div>
+             <p> Loop</p> <img src="./asset/icons/loop icon.svg" alt="">
+            </div>
+          </div>
+          <div class="right-form">
+            <div>
+              <label for="Title">Title</label>
+              <input type="text" id="beat_title" onchange="typeOff()" placeholder="Enter Beat Title">
+            </div>
+            <div>
+              <label for="Title">Producer</label>
+              <input type="text" id="producer" placeholder="Producer(s)">
+            </div>
+            <div>
+              <label for="Title">Tempo</label>
+              <input type="text" id="tempo" placeholder="Tempo">
+            </div>
+            <div>
+              <label for="Title">Genre</label>
+              <input type="text" id="genre" placeholder="Genre">
+            </div>
+            <div>
+              <label for="Title">Mood</label>
+              <input type="text" id="mood" placeholder="Mood">
+            </div>
+          </div>
+        </div>
+        <div class="btn grey-btn">
+          <button class="btn-grey" type="submit"><a>Upload</a></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="music-deck">
+    <div>
+      <a class="beat-detail" href="./beat-detail.html"> <img src="./asset/images/aldi-sigun-unt3066GV-E-unsplash 3.png" alt=""><p id="track-name">lagos</p></a>
+    </div>
+    <div>
+      <img class="small-control" id="prev" src="./asset/icons/previous icon.svg" alt="" onclick="prevTrack()">
+      <img class="big-control" onclick="playpauseTrack()"id="play-pause" src="./asset/icons/play icon.svg" alt="">
+      <img class="small-control" onclick="nextTrack()" id="next" src="./asset/icons/next icon.svg" alt="">
+    </div>
+    <div>
+      <p class="current-time">0:43</p>
+       <input type="range" min="1" max="100" value="0" class="track" id="player" onchange="seekTo()">
+      <p class="total-duration">3:14</p>
+    </div>
+    <div>
+      <img src="./asset/icons/repeat icon.svg" alt="" id="repeat">
+      <img src="./asset/icons/red heart icon.svg" alt="">
+    </div>
+    <div>
+      <img src="./asset/icons/Group 4.svg" alt="">
+      <input type="range" min="1" max="100" value="99" class="track" id="volume" onchange="setVolume()">
+    </div>
+    <div>
+     <a href="./player.html"><img src="./asset/icons/volume box.svg" alt=""></a> 
+    </div>
+  </div>
+  <script src="./dark-mode.js"></script>
+  <script src="./player.js"></script>
+  <script src="./music-list.js"></script>
+</body>
+</html>
+
+<script>
+  const fileavatar = document.getElementById('avatar');
+  fileavatar.onchange = (e) => {
+    e.preventDefault()
+    if(fileavatar.files[0].type.indexOf('image/') !== 0){
+      alert('An image file must be selected');
+      return;
+      }
+    const reader = new FileReader();
+    reader.onload = function() {
+      var str_img = this.result
+      sessionStorage.setItem('image', str_img);
+      console.log(str_img)
+    }
+    reader.readAsDataURL(fileavatar.files[0]);
+  }
+ 
+  // const music = localStorage.getItem('music');
+  // // const real_music = JSON.parse(music)
+  // console.log(typeof(real_music))
+  // const music = sessionStorage.getItem('music');
+  
+  function typeOff() {
+    const title = document.getElementById("beat_title").value;
+    console.log(typeof(title))
+  }
+ 
+  document.getElementById('upload_form').addEventListener('submit', addPost);
+  function addPost(e) {
+    e.preventDefault();
+
+    console.log('hi')
+
+    const title = document.getElementById("beat_title").value;
+    const producer = document.getElementById("producer").value;
+    const tempo = document.getElementById("tempo").value;
+    const genre = document.getElementById("genre").value;
+    const mood = document.getElementById("mood").value;
+    const mail = sessionStorage.getItem('mail');
+    const music = sessionStorage.getItem('music');
+    const avatar = sessionStorage.getItem('image');
+
+    // console.log(music)
+
+    fetch('https://back.flowbasket.com/apis/store_uploads.php', {
+      method : 'POST',
+      headers : {
+        'Accept' : 'application/json, text/plain, */*',
+        'Content-type' : 'application/json',
+      },
+      body:JSON.stringify({
+        title: title,
+        genre : genre,
+        mood : mood,
+        tempo : tempo,
+        creation_file : music,
+        email : mail,
+        file_avatar : avatar
+
+      })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      console.log(data.message)
+      if(data.message === 'Account creation successful') {
+         window.location = '/upld-details.html'
+         document.getElementById('signupForm').reset();
+      }
+      else{
+        document.getElementById('error').innerHTML = data.message;
+      }
+    })
+    .catch((err) => {
+      document.getElementById('error').innerHTML =  err;
+    })
+  }
+</script>
